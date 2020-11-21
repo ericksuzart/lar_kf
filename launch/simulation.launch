@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Starts nodes to move and track husky robot -->
+
+<launch>
+  <!-- Name of husky robot in gazebo -->
+  <arg name="model_name" default="/"/>
+
+  <!-- Launch husky robot and simulation -->
+  <include file="$(find lar_gazebo)/src/launch/lar_husky.launch" />
+
+  <!-- The teleport service and associated parameters -->
+  <include file="$(find lar_kf)/launch/teleport_srv.launch">
+    <arg name="target_pose" default="[0.6, -3.5, 0.1, 0, 0, 1, 0]"/>
+    <arg name="model_name" default="$(arg model_name)"/>
+  </include>
+
+  <!-- Starts Gazebo Odometry tracker -->
+  <include file="$(find lar_kf)/launch/odom_track.launch" >
+    <arg name="model_name" default="$(arg model_name)"/>
+  </include>
+
+  <!-- Node to send command to move robot forward at constant velocity -->
+  <node pkg="rostopic" type="rostopic" name="twist_pub" 
+        args="pub cmd_vel geometry_msgs/Twist '{linear: {x: 0.5, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}' -r 10" />
+</launch>
