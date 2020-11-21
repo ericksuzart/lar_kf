@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Starts Gazebo Teleport Service Node -->
+
+<launch>
+  <!-- set teleport target pose as x,y,z pose and X,Y,Z,W quaternion:
+  (x,y,z,X,Y,Z,W) -->
+  <arg name="target_pose" default="[0, 0, 0, 0, 0, 0, 1]"/>
+  <!-- Model name in gazebo -->
+  <arg name="model_name" default="mobile_base"/>
+
+  <rosparam param="teleport_target_pose" subst_value="True">
+    $(arg target_pose)
+  </rosparam>
+
+  <rosparam param="model_name" subst_value="True">
+    $(arg model_name)
+  </rosparam>
+
+  <node pkg="lar_kf" name="teleport_srv_node" type="teleport_service.py" output="screen"/> 
+
+</launch>
