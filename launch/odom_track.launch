@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Starts Gazebo Odometry tracker -->
+
+<launch>
+  <!-- Model name in gazebo -->
+  <arg name="model_name" default="mobile_base"/>
+
+  <rosparam param="model_name" subst_value="True">
+    $(arg model_name)
+  </rosparam>
+
+  <node pkg="lar_kf" name="odom_tracker" type="odom_track.py" output="screen"/>
+</launch>
