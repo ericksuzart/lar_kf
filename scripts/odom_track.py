@@ -86,7 +86,7 @@ model = GetModelStateRequest()
 # name of the robot model in Gazebo, as defined above or in launch file
 model.model_name = model_name
 
-r = rospy.Rate(2) # Hz
+r = rospy.Rate(10) # Hz
 ground_truth_delta = 0
 last_ground_truth_x = 0
 noisy_odom = 0
